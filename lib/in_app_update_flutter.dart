@@ -5,8 +5,9 @@ export 'package:in_app_update_flutter/src/models/models.dart';
 
 /// A Flutter plugin for in-app updates.
 ///
-/// On iOS, use [showUpdateForIos] to present the App Store product page
-/// using StoreKit.
+/// On iOS, use [showStoreUpdateIosByAppStoreId] to present the App Store
+/// product page using StoreKit, or [showStoreUpdateIosByBundleId] to resolve
+/// the App Store ID automatically from a bundle ID.
 ///
 /// On Android, use [checkUpdateAndroid] to check for updates via Google Play's
 /// In-App Updates API, then [startImmediateUpdateAndroid] or
