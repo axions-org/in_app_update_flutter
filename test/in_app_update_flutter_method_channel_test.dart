@@ -21,7 +21,8 @@ void main() {
 
   group('MethodChannelInAppUpdateFlutter', () {
     group('showStoreUpdateIosByAppStoreId', () {
-      test('calls showStoreUpdateIosByAppStoreId method on the channel', () async {
+      test('calls showStoreUpdateIosByAppStoreId method on the channel',
+          () async {
         String? invokedMethod;
         TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
             .setMockMethodCallHandler(methodChannel, (call) async {
@@ -62,7 +63,8 @@ void main() {
     });
 
     group('showStoreUpdateIosByBundleId', () {
-      test('calls showStoreUpdateIosByBundleId method on the channel', () async {
+      test('calls showStoreUpdateIosByBundleId method on the channel',
+          () async {
         String? invokedMethod;
         TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
             .setMockMethodCallHandler(methodChannel, (call) async {
@@ -96,7 +98,8 @@ void main() {
         });
 
         expect(
-          () => plugin.showStoreUpdateIosByBundleId(bundleId: 'com.example.app'),
+          () =>
+              plugin.showStoreUpdateIosByBundleId(bundleId: 'com.example.app'),
           throwsA(isA<PlatformException>()),
         );
       });
@@ -111,7 +114,8 @@ void main() {
         });
 
         expect(
-          () => plugin.showStoreUpdateIosByBundleId(bundleId: 'com.example.app'),
+          () =>
+              plugin.showStoreUpdateIosByBundleId(bundleId: 'com.example.app'),
           throwsA(isA<PlatformException>()),
         );
       });
