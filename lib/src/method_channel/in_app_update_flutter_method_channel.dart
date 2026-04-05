@@ -16,8 +16,8 @@ class MethodChannelInAppUpdateFlutter extends InAppUpdateFlutterPlatform {
 
   @override
   @Deprecated(
-    'Use showUpdateForIos() on iOS or checkUpdateAndroid() + '
-    'startImmediateUpdateAndroid()/startFlexibleUpdateAndroid() on Android',
+    'Use showStoreUpdateIosByAppStoreId() or showStoreUpdateIosByBundleId() on iOS, '
+    'or checkUpdateAndroid() + startImmediateUpdateAndroid()/startFlexibleUpdateAndroid() on Android',
   )
   Future<void> showUpdate({required String appStoreId}) async {
     await _methodChannel.invokeMethod('showStoreUpdateIos', {
@@ -26,9 +26,26 @@ class MethodChannelInAppUpdateFlutter extends InAppUpdateFlutterPlatform {
   }
 
   @override
+  @Deprecated('Use showStoreUpdateIosByAppStoreId() instead.')
   Future<void> showUpdateForIos({required String appStoreId}) async {
-    await _methodChannel.invokeMethod('showStoreUpdateIos', {
+    await _methodChannel.invokeMethod('showStoreUpdateIosByAppStoreId', {
       'appStoreId': appStoreId,
+    });
+  }
+
+  @override
+  Future<void> showStoreUpdateIosByAppStoreId({
+    required String appStoreId,
+  }) async {
+    await _methodChannel.invokeMethod('showStoreUpdateIosByAppStoreId', {
+      'appStoreId': appStoreId,
+    });
+  }
+
+  @override
+  Future<void> showStoreUpdateIosByBundleId({required String bundleId}) async {
+    await _methodChannel.invokeMethod('showStoreUpdateIosByBundleId', {
+      'bundleId': bundleId,
     });
   }
 

@@ -14,14 +14,75 @@ public class InAppUpdateFlutterPlugin: NSObject, FlutterPlugin, SKStoreProductVi
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    if call.method == "showStoreUpdateIos",
-       let args = call.arguments as? [String: Any],
-       let appStoreId = args["appStoreId"] as? String {
+    switch call.method {
+    case "showStoreUpdateIosByAppStoreId", "showStoreUpdateIos":
+      guard let args = call.arguments as? [String: Any],
+            let appStoreId = args["appStoreId"] as? String else {
+        result(FlutterError(code: "INVALID_ARGUMENTS", message: "appStoreId is required", details: nil))
+        return
+      }
       flutterResult = result
       showStoreProductView(appStoreId: appStoreId)
-    } else {
+
+    case "showStoreUpdateIosByBundleId":
+      guard let args = call.arguments as? [String: Any],
+            let bundleId = args["bundleId"] as? String else {
+        result(FlutterError(code: "INVALID_ARGUMENTS", message: "bundleId is required", details: nil))
+        return
+      }
+      flutterResult = result
+      resolveAppStoreId(bundleId: bundleId)
+
+    default:
       result(FlutterMethodNotImplemented)
     }
+  }
+
+  private func resolveAppStoreId(bundleId: String) {
+    guard let url = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)") else {
+      flutterResult?(FlutterError(code: "INVALID_ARGUMENTS", message: "Invalid bundle ID", details: nil))
+      return
+    }
+
+    let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+      DispatchQueue.main.async {
+        guard let self = self else { return }
+
+        if let error = error {
+          self.flutterResult?(FlutterError(
+            code: "NETWORK_ERROR",
+            message: "Failed to reach iTunes lookup API",
+            details: error.localizedDescription
+          ))
+          return
+        }
+
+        guard let data = data,
+              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let results = json["results"] as? [[String: Any]],
+              !results.isEmpty,
+              let trackId = results[0]["trackId"] as? Int else {
+          let resultCount = (try? JSONSerialization.jsonObject(with: data ?? Data()) as? [String: Any])?["resultCount"] as? Int ?? 0
+          if resultCount == 0 {
+            self.flutterResult?(FlutterError(
+              code: "BUNDLE_ID_NOT_FOUND",
+              message: "No app found for bundle ID: \(bundleId)",
+              details: nil
+            ))
+          } else {
+            self.flutterResult?(FlutterError(
+              code: "INVALID_RESPONSE",
+              message: "Unexpected response from iTunes lookup API",
+              details: nil
+            ))
+          }
+          return
+        }
+
+        self.showStoreProductView(appStoreId: String(trackId))
+      }
+    }
+    task.resume()
   }
 
   private func showStoreProductView(appStoreId: String) {

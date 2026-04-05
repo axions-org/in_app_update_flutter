@@ -34,8 +34,8 @@ abstract class InAppUpdateFlutterPlatform extends PlatformInterface {
   /// On iOS, this presents the App Store product page using StoreKit.
   /// [appStoreId] is the numeric App Store ID of your app.
   @Deprecated(
-    'Use showUpdateForIos() on iOS or checkUpdateAndroid() + '
-    'startImmediateUpdateAndroid()/startFlexibleUpdateAndroid() on Android',
+    'Use showStoreUpdateIosByAppStoreId() or showStoreUpdateIosByBundleId() on iOS, '
+    'or checkUpdateAndroid() + startImmediateUpdateAndroid()/startFlexibleUpdateAndroid() on Android',
   )
   Future<void> showUpdate({required String appStoreId}) {
     throw UnimplementedError('showUpdate() has not been implemented.');
@@ -45,8 +45,32 @@ abstract class InAppUpdateFlutterPlatform extends PlatformInterface {
   ///
   /// [appStoreId] is the numeric App Store ID of your app
   /// (found in your App Store Connect URL).
+  @Deprecated('Use showStoreUpdateIosByAppStoreId() instead.')
   Future<void> showUpdateForIos({required String appStoreId}) {
     throw UnimplementedError('showUpdateForIos() has not been implemented.');
+  }
+
+  /// iOS: Shows the App Store product page overlay via StoreKit.
+  ///
+  /// [appStoreId] is the numeric App Store ID of your app
+  /// (found in your App Store Connect URL).
+  Future<void> showStoreUpdateIosByAppStoreId({required String appStoreId}) {
+    throw UnimplementedError(
+      'showStoreUpdateIosByAppStoreId() has not been implemented.',
+    );
+  }
+
+  /// iOS: Resolves the App Store ID from [bundleId] via the iTunes Lookup API,
+  /// then shows the App Store product page overlay via StoreKit.
+  ///
+  /// Throws a [PlatformException] if:
+  /// - The network request fails (`NETWORK_ERROR`)
+  /// - The bundle ID is not found on the App Store (`BUNDLE_ID_NOT_FOUND`)
+  /// - The API returns an unexpected response (`INVALID_RESPONSE`)
+  Future<void> showStoreUpdateIosByBundleId({required String bundleId}) {
+    throw UnimplementedError(
+      'showStoreUpdateIosByBundleId() has not been implemented.',
+    );
   }
 
   /// Android: Checks whether an in-app update is available via Play Core.
