@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'in_app_update_flutter'
-  s.version          = '2.0.0'
+  s.version          = '2.1.0'
   s.summary          = 'Show an in-app update prompt using the native App Store product page.'
   s.description      = <<-DESC
 A Flutter plugin to show an in-app update prompt using the native App Store product page on iOS, keeping users inside your app.

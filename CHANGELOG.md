@@ -1,3 +1,12 @@
+## 2.1.0
+
+- Added `showStoreUpdateIosByBundleId()` — resolves the App Store ID from a bundle ID via the iTunes Lookup API and presents the App Store update prompt
+- Added `showStoreUpdateIosByAppStoreId()` — explicit replacement for `showUpdateForIos()`, which is now deprecated
+- Fixed iOS production safety issues: removed retained `flutterResult` and `controller` instance variables, pass `result` through the call chain to support concurrent calls safely
+- Fixed iOS: `topViewController()` resolves the topmost presented view controller at call time instead of capturing root at registration
+- Fixed iOS: added `[weak self]` and `DispatchQueue.main.async` to `loadProduct` closure to prevent retain cycle and guarantee UI calls on the main thread
+- Fixed Android: explicitly unregister `InstallStateUpdatedListener` in `unregisterActivityListener()` to prevent listener leak on abrupt activity detach
+
 ## 2.0.0
 
 - Added Android in-app updates support via Google Play's In-App Updates API
