@@ -38,7 +38,7 @@ class IosUpdateExample extends StatelessWidget {
           onPressed: () async {
             try {
               await InAppUpdateFlutter()
-                  .showUpdateForIos(appStoreId: '544007664');
+                  .showStoreUpdateIosByAppStoreId(appStoreId: '544007664');
             } catch (e) {
               if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(

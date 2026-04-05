@@ -20,8 +20,9 @@ void main() {
   });
 
   group('MethodChannelInAppUpdateFlutter', () {
-    group('showUpdateForIos', () {
-      test('calls showStoreUpdateIos method on the channel', () async {
+    group('showStoreUpdateIosByAppStoreId', () {
+      test('calls showStoreUpdateIosByAppStoreId method on the channel',
+          () async {
         String? invokedMethod;
         TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
             .setMockMethodCallHandler(methodChannel, (call) async {
@@ -29,8 +30,8 @@ void main() {
           return null;
         });
 
-        await plugin.showUpdateForIos(appStoreId: '544007664');
-        expect(invokedMethod, 'showStoreUpdateIos');
+        await plugin.showStoreUpdateIosByAppStoreId(appStoreId: '544007664');
+        expect(invokedMethod, 'showStoreUpdateIosByAppStoreId');
       });
 
       test('passes appStoreId argument to the channel', () async {
@@ -41,7 +42,7 @@ void main() {
           return null;
         });
 
-        await plugin.showUpdateForIos(appStoreId: '544007664');
+        await plugin.showStoreUpdateIosByAppStoreId(appStoreId: '544007664');
         expect(invokedArgs, {'appStoreId': '544007664'});
       });
 
@@ -55,7 +56,66 @@ void main() {
         });
 
         expect(
-          () => plugin.showUpdateForIos(appStoreId: '544007664'),
+          () => plugin.showStoreUpdateIosByAppStoreId(appStoreId: '544007664'),
+          throwsA(isA<PlatformException>()),
+        );
+      });
+    });
+
+    group('showStoreUpdateIosByBundleId', () {
+      test('calls showStoreUpdateIosByBundleId method on the channel',
+          () async {
+        String? invokedMethod;
+        TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(methodChannel, (call) async {
+          invokedMethod = call.method;
+          return null;
+        });
+
+        await plugin.showStoreUpdateIosByBundleId(bundleId: 'com.example.app');
+        expect(invokedMethod, 'showStoreUpdateIosByBundleId');
+      });
+
+      test('passes bundleId argument to the channel', () async {
+        Map<dynamic, dynamic>? invokedArgs;
+        TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(methodChannel, (call) async {
+          invokedArgs = call.arguments as Map<dynamic, dynamic>;
+          return null;
+        });
+
+        await plugin.showStoreUpdateIosByBundleId(bundleId: 'com.example.app');
+        expect(invokedArgs, {'bundleId': 'com.example.app'});
+      });
+
+      test('propagates NETWORK_ERROR', () async {
+        TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(methodChannel, (call) async {
+          throw PlatformException(
+            code: 'NETWORK_ERROR',
+            message: 'Failed to reach iTunes lookup API',
+          );
+        });
+
+        expect(
+          () =>
+              plugin.showStoreUpdateIosByBundleId(bundleId: 'com.example.app'),
+          throwsA(isA<PlatformException>()),
+        );
+      });
+
+      test('propagates BUNDLE_ID_NOT_FOUND', () async {
+        TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(methodChannel, (call) async {
+          throw PlatformException(
+            code: 'BUNDLE_ID_NOT_FOUND',
+            message: 'No app found for bundle ID: com.example.app',
+          );
+        });
+
+        expect(
+          () =>
+              plugin.showStoreUpdateIosByBundleId(bundleId: 'com.example.app'),
           throwsA(isA<PlatformException>()),
         );
       });

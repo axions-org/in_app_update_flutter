@@ -16,10 +16,11 @@ import 'package:in_app_update_flutter/in_app_update_flutter.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('showUpdateForIos test', (WidgetTester tester) async {
+  testWidgets('showStoreUpdateIosByAppStoreId test',
+      (WidgetTester tester) async {
     final InAppUpdateFlutter plugin = InAppUpdateFlutter();
     if (Platform.isIOS) {
-      await plugin.showUpdateForIos(appStoreId: '544007664');
+      await plugin.showStoreUpdateIosByAppStoreId(appStoreId: '544007664');
     } else if (Platform.isAndroid) {
       final info = await plugin.checkUpdateAndroid();
       expect(info, isA<AppUpdateInfoAndroid>());

@@ -8,7 +8,7 @@ On **iOS**, it presents the App Store product page using `SKStoreProductViewCont
 
 ## Features
 
-- iOS: Show the App Store update prompt using `SKStoreProductViewController` without navigating users away from the app
+- iOS: Show the App Store update prompt using `SKStoreProductViewController` without navigating users away from the app, via App Store ID or bundle ID
 - iOS: Native Swift implementation with zero AppDelegate configuration required
 - iOS: Supports both Swift Package Manager (SPM) and CocoaPods
 - Android: Check update availability and metadata via the Play Core API
@@ -25,7 +25,7 @@ Add the package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  in_app_update_flutter: ^2.0.0
+  in_app_update_flutter: ^2.1.0
 ```
 
 Then run:
@@ -38,18 +38,51 @@ flutter pub get
 
 ## iOS Usage
 
-Pass your numeric App Store ID to `showUpdateForIos`. The ID can be found in your App Store Connect URL or the app's public App Store link.
+There are two ways to trigger the App Store update prompt on iOS.
+
+### Option 1: Using the App Store ID (recommended)
+
+Pass the numeric App Store ID directly. This requires no network lookup, works offline, and is the most reliable option.
 
 ```dart
 import 'package:in_app_update_flutter/in_app_update_flutter.dart';
 
-await InAppUpdateFlutter().showUpdateForIos(appStoreId: '1234567890');
+await InAppUpdateFlutter().showStoreUpdateIosByAppStoreId(appStoreId: '1234567890');
 ```
 
 **How to find your App Store ID:**
 
 1. Open your app's App Store URL — for example: `https://apps.apple.com/app/id1234567890`
 2. The numeric portion after `id` is your App Store ID.
+
+### Option 2: Using the Bundle ID
+
+Pass your app's bundle ID instead. The plugin resolves the numeric App Store ID automatically via the iTunes Lookup API, then presents the update prompt.
+
+**Trade-off:** This option requires a network request before the prompt can appear. If the device is offline, the bundle ID is not found on the App Store, or the API returns an unexpected response, the call will throw a `PlatformException`. Use Option 1 if you already know your App Store ID.
+
+```dart
+await InAppUpdateFlutter().showStoreUpdateIosByBundleId(bundleId: 'com.example.myapp');
+```
+
+Since this involves a network call, it can fail. Always wrap it in a `try/catch`:
+
+```dart
+try {
+  await InAppUpdateFlutter().showStoreUpdateIosByBundleId(bundleId: 'com.example.myapp');
+} on PlatformException catch (e) {
+  switch (e.code) {
+    case 'NETWORK_ERROR':
+      // iTunes Lookup API was unreachable
+    case 'BUNDLE_ID_NOT_FOUND':
+      // No app found for this bundle ID on the App Store
+    case 'INVALID_RESPONSE':
+      // Unexpected response from the iTunes Lookup API
+    case 'STORE_ERROR':
+      // SKStoreProductViewController failed to load
+  }
+}
+```
 
 **iOS notes:**
 - Requires iOS 12.0 or later

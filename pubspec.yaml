@@ -1,7 +1,7 @@
 name: in_app_update_flutter
 description: "A Flutter plugin to show an in-app update prompt using the native App Store product page on iOS, keeping users inside your app."
-version: 2.0.0
-repository: https://github.com/pulkit7724/in_app_update_flutter.git
+version: 2.1.0
+repository: https://github.com/axions-org/in_app_update_flutter
 
 environment:
   sdk: ^3.6.2
