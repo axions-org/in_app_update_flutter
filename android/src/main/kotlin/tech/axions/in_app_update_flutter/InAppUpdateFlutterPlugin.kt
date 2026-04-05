@@ -79,6 +79,9 @@ class InAppUpdateFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
     }
 
     private fun unregisterActivityListener() {
+        installStateListener?.let { appUpdateManager?.unregisterListener(it) }
+        installStateListener = null
+        eventSink = null
         activityPluginBinding?.removeActivityResultListener(this)
         activityPluginBinding = null
         activity = null
