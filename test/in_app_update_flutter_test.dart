@@ -7,16 +7,30 @@ import 'package:flutter_test/flutter_test.dart';
 /// the correct token so it can be set as the platform instance.
 class _MockPlatform extends InAppUpdateFlutterPlatform {
   String? lastAppStoreId;
-
-  @override
-  Future<void> showUpdateForIos({required String appStoreId}) async {
-    lastAppStoreId = appStoreId;
-  }
+  String? lastBundleId;
 
   @override
   // ignore: deprecated_member_use_from_same_package
   Future<void> showUpdate({required String appStoreId}) async {
     lastAppStoreId = appStoreId;
+  }
+
+  @override
+  // ignore: deprecated_member_use_from_same_package
+  Future<void> showUpdateForIos({required String appStoreId}) async {
+    lastAppStoreId = appStoreId;
+  }
+
+  @override
+  Future<void> showStoreUpdateIosByAppStoreId({
+    required String appStoreId,
+  }) async {
+    lastAppStoreId = appStoreId;
+  }
+
+  @override
+  Future<void> showStoreUpdateIosByBundleId({required String bundleId}) async {
+    lastBundleId = bundleId;
   }
 
   @override
@@ -104,7 +118,24 @@ void main() {
 
       test('showUpdateForIos throws UnimplementedError', () {
         expect(
+          // ignore: deprecated_member_use_from_same_package
           () => platform.showUpdateForIos(appStoreId: '123'),
+          throwsA(isA<UnimplementedError>()),
+        );
+      });
+
+      test('showStoreUpdateIosByAppStoreId throws UnimplementedError', () {
+        expect(
+          () => platform.showStoreUpdateIosByAppStoreId(appStoreId: '123'),
+          throwsA(isA<UnimplementedError>()),
+        );
+      });
+
+      test('showStoreUpdateIosByBundleId throws UnimplementedError', () {
+        expect(
+          () => platform.showStoreUpdateIosByBundleId(
+            bundleId: 'com.example.app',
+          ),
           throwsA(isA<UnimplementedError>()),
         );
       });
@@ -146,13 +177,23 @@ void main() {
     });
 
     group('mock platform delegates', () {
-      test('showUpdateForIos passes appStoreId to mock', () async {
+      test('showStoreUpdateIosByAppStoreId passes appStoreId to mock',
+          () async {
         final mock = _MockPlatform();
         InAppUpdateFlutterPlatform.instance = mock;
 
         await InAppUpdateFlutterPlatform.instance
-            .showUpdateForIos(appStoreId: '544007664');
+            .showStoreUpdateIosByAppStoreId(appStoreId: '544007664');
         expect(mock.lastAppStoreId, '544007664');
+      });
+
+      test('showStoreUpdateIosByBundleId passes bundleId to mock', () async {
+        final mock = _MockPlatform();
+        InAppUpdateFlutterPlatform.instance = mock;
+
+        await InAppUpdateFlutterPlatform.instance
+            .showStoreUpdateIosByBundleId(bundleId: 'com.example.app');
+        expect(mock.lastBundleId, 'com.example.app');
       });
 
       test('checkUpdateAndroid returns expected info', () async {
