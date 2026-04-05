@@ -1,0 +1,65 @@
+name: Feature Request
+description: Suggest a new feature or improvement for in_app_update_flutter
+labels: ["enhancement", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea to make this plugin better? Describe it below. For general questions, please use [Discussions](https://github.com/axions-org/in_app_update_flutter/discussions) instead.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Pre-flight checklist
+      options:
+        - label: I have searched existing issues and this is not a duplicate
+          required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Which platform(s) does this feature apply to?
+      multiple: true
+      options:
+        - Android
+        - iOS
+        - Both / Cross-platform
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What problem does this solve, or what limitation does it address?
+      placeholder: "Currently there is no way to... which means I have to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe the feature you'd like and how it should work.
+    validations:
+      required: true
+
+  - type: textarea
+    id: api
+    attributes:
+      label: Suggested API (optional)
+      description: If you have a specific API design in mind, sketch it out here.
+      render: dart
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any alternative solutions or workarounds you've already explored.
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Links, references, screenshots, or anything else that supports the request.
