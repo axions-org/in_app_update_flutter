@@ -1,0 +1,58 @@
+name: Documentation Update
+description: Report missing, incorrect, or outdated documentation
+labels: ["docs"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to report issues with the README, API docs, code comments, or any other documentation.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Pre-flight checklist
+      options:
+        - label: I have searched existing issues and this is not a duplicate
+          required: true
+
+  - type: dropdown
+    id: doc_type
+    attributes:
+      label: Documentation area
+      options:
+        - README
+        - API / method docs
+        - Code comments / inline docs
+        - CHANGELOG
+        - Example app
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: location
+    attributes:
+      label: Where is the issue?
+      description: Link to the file, section heading, or line number(s) that need updating.
+      placeholder: "e.g. README.md — iOS Usage section, or lib/in_app_update_flutter.dart:42"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong or missing?
+      description: Describe the inaccuracy, gap, or unclear explanation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested improvement
+      description: How should the documentation read? Paste a corrected snippet if you have one.
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
