@@ -34,7 +34,7 @@ body:
     attributes:
       label: Bug description
       description: A clear and concise description of what the bug is.
-      placeholder: "When I call showStoreUpdateIosByBundleId, the app crashes with..."
+      placeholder: "When I call showUpdateForIos, the app crashes with..."
     validations:
       required: true
 
@@ -44,7 +44,7 @@ body:
       label: Steps to reproduce
       description: Step-by-step instructions to reproduce the behavior.
       placeholder: |
-        1. Call `InAppUpdateFlutter().showStoreUpdateIosByBundleId(bundleId: 'com.example.app')`
+        1. Call `InAppUpdateFlutter().showUpdateForIos(appStoreId: '544007664')`
         2. ...
     validations:
       required: true
