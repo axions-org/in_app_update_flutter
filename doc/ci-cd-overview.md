@@ -2,7 +2,7 @@
 
 ## 1. What checks are in the CI/CD pipeline?
 
-### CI (Continuous Integration) — `ci.yml`
+### CI (Continuous Integration) with `ci.yml`
 
 | Check | What it does |
 |-------|-------------|
@@ -11,7 +11,7 @@
 | **test** | Runs `flutter test --coverage` to execute all unit tests and generate a coverage report. Uploads coverage data to Codecov. |
 | **dry-run-publish** | Runs `flutter pub publish --dry-run` to verify the package is in a valid, publishable state (correct pubspec, no missing files, etc.) without actually publishing. |
 
-### CD (Continuous Deployment) — `cd.yml`
+### CD (Continuous Deployment) with `cd.yml`
 
 | Check | What it does |
 |-------|-------------|
@@ -39,7 +39,7 @@ git tag v1.0.0
 git push origin v1.0.0
 ```
 
-This triggers the publish to pub.dev and the GitHub Release creation. Merging to `production` alone does **not** trigger a publish — you must explicitly tag a release.
+This triggers the publish to pub.dev and the GitHub Release creation. Merging to `production` alone does **not** trigger a publish. You must explicitly tag a release.
 
 ---
 
@@ -61,7 +61,61 @@ The following rules are applied to the `production` branch in GitHub Settings:
 | Rule | Why | When it applies |
 |------|-----|-----------------|
 | **Require a pull request before merging** | Prevents direct pushes to `production`. All changes must go through a PR, providing a clear review trail and ensuring CI runs before merge. | Every time someone tries to push or merge into `production`. |
-| **Require status checks to pass** (`analyze`, `format`, `test`) | Ensures no broken, unformatted, or failing code reaches `production`. The three checks must all pass before the PR merge button becomes available. | When a PR targets `production` — GitHub blocks the merge until all three checks are green. |
-| **Require branches to be up to date before merging** | Ensures the PR has been tested against the latest `production` code, not a stale version. Prevents cases where two PRs pass individually but conflict when both are merged. | When merging a PR — if `production` has moved ahead since the branch was last updated, you must update your branch first. |
+| **Require status checks to pass** (`analyze`, `format`, `test`) | Ensures no broken, unformatted, or failing code reaches `production`. The three checks must all pass before the PR merge button becomes available. | When a PR targets `production`. GitHub blocks the merge until all three checks are green. |
+| **Require branches to be up to date before merging** | Ensures the PR has been tested against the latest `production` code, not a stale version. Prevents cases where two PRs pass individually but conflict when both are merged. | When merging a PR. If `production` has moved ahead since the branch was last updated, you must update your branch first. |
 | **Do not allow force pushes** | Protects the commit history of `production` from being rewritten. Force pushes can destroy commits and break other contributors' branches. | Any time someone attempts `git push --force` to `production`. |
 | **Do not allow deletions** | Prevents accidental or intentional deletion of the `production` branch. | Any time someone attempts to delete the `production` branch. |
+
+---
+
+## 6. Contributing workflow
+
+Here is the recommended workflow for contributing to this project:
+
+```mermaid
+graph LR
+    A[Fork repo] --> B[Create branch from production]
+    B --> C[Make changes]
+    C --> D[Write / update tests]
+    D --> E[Run dart format .]
+    E --> F[Run flutter analyze]
+    F --> G[Run flutter test]
+    G --> H[Push branch]
+    H --> I[Open PR against production]
+    I --> J[CI runs: analyze, format, test, dry-run]
+    J --> K[Code review]
+    K --> L[Merge to production]
+```
+
+### Quick reference
+
+```bash
+# Create a feature branch
+git checkout -b feat/my-feature production
+
+# Format your code
+dart format .
+
+# Analyze
+flutter analyze
+
+# Run tests
+flutter test
+
+# Run Android unit tests (from project root)
+cd android && ./gradlew test && cd ..
+```
+
+### Release process (maintainers only)
+
+1. Update `CHANGELOG.md` with the new version notes.
+2. Update `pubspec.yaml` version number.
+3. Merge to `production` via PR.
+4. Tag the release:
+   ```bash
+   git checkout production
+   git pull
+   git tag vX.Y.Z
+   git push origin vX.Y.Z
+   ```
+5. CD automatically publishes to pub.dev and creates a GitHub Release.
