@@ -107,7 +107,7 @@ if (info.updateAvailability == UpdateAvailabilityAndroid.updateAvailable &&
   await plugin.startFlexibleUpdateAndroid();
 
   plugin.installStateStreamAndroid.listen((state) {
-    if (state.installStatus == InstallStatusAndroid.downloaded) {
+    if (state.status == InstallStatusAndroid.downloaded) {
       plugin.completeUpdateAndroid();
     }
   });
