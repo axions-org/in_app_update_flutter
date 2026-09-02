@@ -1,4 +1,4 @@
-group = "tech.axions.in_app_update_flutter"
+group = "me.pulkitagarwal.in_app_update_flutter"
 version = "1.0-SNAPSHOT"
 
 buildscript {
@@ -25,7 +25,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    namespace = "tech.axions.in_app_update_flutter"
+    namespace = "me.pulkitagarwal.in_app_update_flutter"
 
     compileSdk = 36
 

@@ -1,4 +1,4 @@
-package tech.axions.in_app_update_flutter
+package me.pulkitagarwal.in_app_update_flutter
 
 import android.app.Activity
 import android.content.Intent

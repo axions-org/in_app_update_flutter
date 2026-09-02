@@ -9,9 +9,9 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 A Flutter plugin to prompt users for in-app updates using StoreKit on iOS and the Play Core API on Android, supporting both immediate and flexible update flows.
                        DESC
-  s.homepage         = 'https://github.com/axions-org/in_app_update_flutter'
+  s.homepage         = 'https://github.com/buildwithpulkit/in_app_update_flutter'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Axions' => 'hello@axions.tech' }
+  s.author           = { 'Pulkit Agarwal' => 'support@pulkitagarwal.me' }
   s.source           = { :path => '.' }
   s.source_files = 'in_app_update_flutter/Sources/in_app_update_flutter/**/*.swift'
   s.dependency 'Flutter'

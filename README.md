@@ -3,7 +3,7 @@
 [![pub package](https://img.shields.io/pub/v/in_app_update_flutter.svg)](https://pub.dev/packages/in_app_update_flutter)
 [![likes](https://img.shields.io/pub/likes/in_app_update_flutter)](https://pub.dev/packages/in_app_update_flutter)
 [![pub points](https://img.shields.io/pub/points/in_app_update_flutter)](https://pub.dev/packages/in_app_update_flutter)
-[![license](https://img.shields.io/github/license/axions-org/in_app_update_flutter)](https://github.com/axions-org/in_app_update_flutter/blob/production/LICENSE)
+[![license](https://img.shields.io/github/license/buildwithpulkit/in_app_update_flutter)](https://github.com/buildwithpulkit/in_app_update_flutter/blob/production/LICENSE)
 [![platform](https://img.shields.io/badge/platform-android%20%7C%20ios-blue)](https://pub.dev/packages/in_app_update_flutter)
 
 A Flutter plugin that provides native in-app update experiences using StoreKit (iOS) and the Google Play In-App Updates API (Android), letting users update without leaving the app.
@@ -29,7 +29,7 @@ On **iOS**, it presents the App Store product page using `SKStoreProductViewCont
 
 | iOS | Android Immediate | Android Flexible |
 |-----|------------------|-----------------|
-| ![iOS in-app update](https://raw.githubusercontent.com/axions-org/in_app_update_flutter/production/assets/screenshots/ios-in-app-update.png) | ![Android immediate update](https://raw.githubusercontent.com/axions-org/in_app_update_flutter/production/assets/screenshots/android-immediate-update.png) | ![Android flexible update](https://raw.githubusercontent.com/axions-org/in_app_update_flutter/production/assets/screenshots/android-flexible-update.png) |
+| ![iOS in-app update](https://raw.githubusercontent.com/buildwithpulkit/in_app_update_flutter/production/assets/screenshots/ios-in-app-update.png) | ![Android immediate update](https://raw.githubusercontent.com/buildwithpulkit/in_app_update_flutter/production/assets/screenshots/android-immediate-update.png) | ![Android flexible update](https://raw.githubusercontent.com/buildwithpulkit/in_app_update_flutter/production/assets/screenshots/android-flexible-update.png) |
 
 ---
 

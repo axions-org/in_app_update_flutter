@@ -1,9 +1,9 @@
 name: in_app_update_flutter
 description: "A Flutter plugin to prompt users for in-app updates using StoreKit on iOS and Play Core API on Android."
 version: 3.0.0
-repository: https://github.com/axions-org/in_app_update_flutter.git
-homepage: https://github.com/axions-org/in_app_update_flutter
-issue_tracker: https://github.com/axions-org/in_app_update_flutter/issues
+repository: https://github.com/buildwithpulkit/in_app_update_flutter.git
+homepage: https://github.com/buildwithpulkit/in_app_update_flutter
+issue_tracker: https://github.com/buildwithpulkit/in_app_update_flutter/issues
 topics:
   - in-app-update
   - app-store
@@ -29,7 +29,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: tech.axions.in_app_update_flutter
+        package: me.pulkitagarwal.in_app_update_flutter
         pluginClass: InAppUpdateFlutterPlugin
       ios:
         pluginClass: InAppUpdateFlutterPlugin
